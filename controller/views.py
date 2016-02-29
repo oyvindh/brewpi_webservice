@@ -6,12 +6,11 @@ from .serializers import ControllerSerializer, DeviceSerializer
 
 class DeviceViewSet(viewsets.ViewSet):
     def list(self, request, controller_pk=None):
-        print("youpi")
-        xx
+        print("list...")
         return Response()
 
     def retrieve(self, request, pk=None, controller_pk=None):
-        print("youpi2")
+        print("retrieve...")
         return Response(serializer.data)
 
 

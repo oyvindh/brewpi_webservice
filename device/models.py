@@ -1,3 +1,7 @@
+"""
+This module holds all the generic Models about devices
+"""
+
 from django.db import models
 from django.utils.translation import ugettext as _
 
@@ -15,11 +19,11 @@ class Device(PolymorphicModel):
 
     label = models.CharField(max_length=255, blank=True, null=True)
     uri = models.CharField(max_length=255, help_text=_("A device URI such as onewire://182377282"))
-    assigned_id = models.PositiveIntegerField(blank=True, null=True, help_text=_("The ID assigned by the Controller"))
+    slot = models.PositiveIntegerField(blank=True, null=True, help_text=_("The slot ID assigned paired with the Controller"))
 
     @property
     def is_assigned(self):
-        return self.assigned_id != None
+        return self.slot != None
 
     def __str__(self):
         return self.label or "Unnamed device (uri={0})".format(self.uri)
