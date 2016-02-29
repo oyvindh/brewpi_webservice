@@ -41,8 +41,13 @@ INSTALLED_APPS = [
     'django_extensions',
     'rest_framework',
     'rest_framework_swagger',
+    'polymorphic',
     # Local apps
-    'brewpi_webservice.authentication',
+    'authentication',
+    'device',
+    #'device.sensor',
+    #'device.actuator',
+    'controller',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -127,6 +132,6 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAdminUser',),
+    # 'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAdminUser',),
     'PAGE_SIZE': 10
 }
