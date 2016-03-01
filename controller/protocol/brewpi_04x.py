@@ -8,12 +8,13 @@ from device.sensor.models import TemperatureSensor
 from device.actuator.models import DS2413Actuator
 
 class BrewPi04x(object):
-    (SENSOR_TEMPERATURE,
-     ACTUATOR_DS2413) = range(2, 4)
-
     """
     Connection Layer for existing BrewPi Web UI (BrewPi v0.4.x)
     """
+
+    (SENSOR_TEMPERATURE,
+     ACTUATOR_DS2413) = range(2, 4)
+
     def __init__(self, aController):
         self.controller = aController
         self.script_path = "socketmessage.php"
@@ -48,7 +49,7 @@ class BrewPi04x(object):
             self._refresh_device_list(read_values=True)
             self.device_data = self._get_device_list()
         except requests.exceptions.ConnectionError:
-            pass
+            return False
 
         return True
 
