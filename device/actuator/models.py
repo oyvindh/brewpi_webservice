@@ -11,17 +11,13 @@ class DS2413Actuator(PWMActuator):
         verbose_name = 'DS2413'
         verbose_name_plural = 'DS2413'
 
-    OUTPUT_CHOICES = (
-        ('A', 'A'),
-        ('B', 'B')
-    )
-    PIN_TYPE_CHOICES = (
-        ('I', _("Inverted")),
-        ('NI', _("Not Inverted"))
+    PIO_CHOICES = (
+        (0, 'A'),
+        (1, 'B')
     )
 
-    output = models.CharField(choices=OUTPUT_CHOICES, max_length=1)
-    pin_type = models.CharField(choices=PIN_TYPE_CHOICES, max_length=20)
+    pio = models.PositiveIntegerField(choices=PIO_CHOICES, help_text=_("PIO number of the addressable switch"))
+    inverted = models.BooleanField(default=False, help_text=_("If the switch is inverted"))
 
     @property
     def get_status(self):
