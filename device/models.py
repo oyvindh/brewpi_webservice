@@ -13,16 +13,13 @@ class Device(PolymorphicModel):
     """
     Any hardware device (sensor, actuator) that is connected to a Controller
     """
-    class Meta:
-        abstract = True
-        # unique_together = (('controller', 'assigned_id'),)
-
     label = models.CharField(max_length=255, blank=True, null=True)
     uri = models.CharField(max_length=255, help_text=_("A device URI such as onewire://182377282"))
     slot = models.PositiveIntegerField(blank=True, null=True, help_text=_("The slot ID assigned paired with the Controller"))
+    controller = models.ForeignKey(Controller, related_name='devices')
 
     @property
-    def is_assigned(self):
+    def is_installed(self):
         return self.slot != None
 
     def __str__(self):
@@ -33,14 +30,14 @@ class Sensor(Device):
     A sensor is an object whose purpose is to detect events or changes
     in its environment, and then provide a corresponding output.
     """
-    controller = models.ForeignKey(Controller, related_name='sensors')
+    pass
 
 class Actuator(Device):
     """
     An actuator is a type of motor that is responsible for moving or
     controlling a mechanism or system.
     """
-    controller = models.ForeignKey(Controller, related_name='actuators')
+    pass
 
 class PWMActuator(Actuator):
     """

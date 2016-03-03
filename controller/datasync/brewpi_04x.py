@@ -2,18 +2,24 @@ import json
 import time
 from urllib.parse import urljoin
 
+from multimethod import multimethod, DispatchError
 import requests
 
 from device.sensor.models import TemperatureSensor
 from device.actuator.models import DS2413Actuator
 
-class BrewPi04x(object):
+from .abstract import AbstractSyncher
+
+class BrewPi04xSyncher(AbstractSyncher):
     """
-    Connection Layer for existing BrewPi Web UI (BrewPi v0.4.x)
+    Model Data Syncher for existing BrewPi Web UI (BrewPi v0.4.x)
     """
 
     (SENSOR_TEMPERATURE,
      ACTUATOR_DS2413) = range(2, 4)
+
+    device_model_mapping = {SENSOR_TEMPERATURE: TemperatureSensor,
+                            ACTUATOR_DS2413: DS2413Actuator}
 
     def __init__(self, aController):
         self.controller = aController
@@ -26,7 +32,6 @@ class BrewPi04x(object):
         Ask the controller to internally refresh its device list
         """
         requests.post(self.full_uri, data={'messageType': 'refreshDeviceList', 'message': 'readValues'})
-        time.sleep(3)
 
         return True
 
@@ -47,54 +52,26 @@ class BrewPi04x(object):
 
         try:
             self._refresh_device_list(read_values=True)
+            time.sleep(3)
             self.device_data = self._get_device_list()
         except requests.exceptions.ConnectionError:
             return False
 
         return True
 
-    def _update_temperature_sensor(self, uri, device_data):
-        """
-        Update a Temperature Sensor
-        """
-        device, created = TemperatureSensor.objects.get_or_create(uri=uri, controller=self.controller)
-
-        # Temperature value
-        device.value = device_data['v']
-
-        return device
-
-    def _update_ds2413_actuator(self, uri, device_data):
-        """
-        Update a DS2413 Actuator
-        """
-        device, created = DS2413Actuator.objects.get_or_create(uri=uri, pio=device_data['n'], controller=self.controller)
-
-        # Pin inversion
-        if device_data['x'] == 0:
-            device.inverted = False
-        else:
-            device.inverted = True
-
-        device.pio = device_data['n']
-
-        return device
-
-
     def _update_device_models(self, save=False):
         """
         Update values of device models for this controller
         """
         for device_data in self.device_data['deviceList']['installed']:
-            uri = "onewire://{0}".format(device_data['a'])
+            device_class = self.device_model_mapping[device_data['h']]
 
-            if device_data['h'] == BrewPi04x.SENSOR_TEMPERATURE:
-                device = self._update_temperature_sensor(uri, device_data)
-            elif device_data['h'] == BrewPi04x.ACTUATOR_DS2413:
-                device = self._update_ds2413_actuator(uri, device_data)
+            device = self._update_installed_device_model(device_class,
+                                                         self.controller,
+                                                         slot_id=device_data['i'],
+                                                         data=device_data)
 
-            device.slot = device_data['i']
-            if save:
+            if device and save:
                 device.save()
 
     def update_controller_model(self, save=False):
@@ -109,3 +86,28 @@ class BrewPi04x(object):
 
         if save:
             self.controller.save()
+
+
+    @multimethod(TemperatureSensor)
+    def _update_model(aModel, data):
+        """
+        Update a Temperature Sensor
+        """
+        aModel.value = data['v']
+
+        return True
+
+    @multimethod(DS2413Actuator)
+    def _update_model(aModel, data):
+        """
+        Update a DS2413 Actuator
+        """
+        # Pin inversion
+        if data['x'] == 0:
+            aModel.inverted = False
+        else:
+            aModel.inverted = True
+
+        aModel.pio = data['n']
+
+        return True

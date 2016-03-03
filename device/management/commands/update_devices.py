@@ -1,14 +1,14 @@
 from django.core.management.base import BaseCommand, CommandError
 
 from controller.models import Controller
-from controller.protocol.brewpi_04x import BrewPi04x
+from controller.datasync.brewpi_04x import BrewPi04xSyncher
 
 class Command(BaseCommand):
     help = 'Discover Devices of Controllers and update their status'
 
     def handle(self, *args, **options):
         for controller in Controller.objects.all():
-            p = BrewPi04x(controller)
+            p = BrewPi04xSyncher(controller)
             p.read_sensor_states()
             p.update_controller_model(save=True)
 
