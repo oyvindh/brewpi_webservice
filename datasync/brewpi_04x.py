@@ -89,7 +89,7 @@ class BrewPi04xSyncher(AbstractSyncher):
 
 
     @multimethod(TemperatureSensor)
-    def _update_model(aModel, data):
+    def _update_model(aModel, data) -> bool:
         """
         Update a Temperature Sensor
         """
@@ -98,7 +98,7 @@ class BrewPi04xSyncher(AbstractSyncher):
         return True
 
     @multimethod(DS2413Actuator)
-    def _update_model(aModel, data):
+    def _update_model(aModel, data) -> bool:
         """
         Update a DS2413 Actuator
         """

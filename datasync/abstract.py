@@ -8,7 +8,7 @@ from device.sensor.models import TemperatureSensor
 class AbstractSyncher(object):
     (PROTO_ONEWIRE) = range(0, 2)
 
-    def _update_installed_device_model(self, aDeviceClass, aController, slot_id, data):
+    def _update_installed_device_model(self, aDeviceClass, aController, slot_id, data) -> Device:
         """
         Given a slot and a Device class, create and/or update state
         """
@@ -25,7 +25,7 @@ class AbstractSyncher(object):
         return device
 
 
-    def _get_or_make_installed_device(self, aDeviceClass, aController, slot_id):
+    def _get_or_make_installed_device(self, aDeviceClass, aController, slot_id) -> Device:
         """
         Lookup an already installed device in the database.
         If none is found, create it in memory. Device needs to be saved manually.
@@ -54,7 +54,7 @@ class AbstractSyncher(object):
         aDevice.slot_id = None
 
 
-    def _make_uri(self, protocol, address):
+    def _make_uri(self, protocol, address) -> str:
         """
         Construct a URI from a given protocol and address
         """
