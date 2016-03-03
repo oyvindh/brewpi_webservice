@@ -6,7 +6,24 @@ from device.models import Device
 from device.sensor.models import TemperatureSensor
 
 class AbstractSyncher(object):
-    (PROTO_ONEWIRE) = range(0, 2)
+    """
+    Abstract base class for writing new Model Synchronizers.
+    """
+    (PROTO_ONEWIRE) = range(0, 1)
+
+
+    def read_sensor_states(self) -> bool:
+        """
+        Refresh and read state devices from the Controller
+        """
+        raise NotImplementedError
+
+
+    def update_controller_model(self, save=False) -> bool:
+        """
+        Update the controller model and its devices
+        """
+        raise NotImplementedError
 
     def _update_installed_device_model(self, aDeviceClass, aController, slot_id, data) -> Device:
         """

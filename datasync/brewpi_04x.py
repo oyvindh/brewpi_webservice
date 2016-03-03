@@ -74,7 +74,7 @@ class BrewPi04xSyncher(AbstractSyncher):
             if device and save:
                 device.save()
 
-    def update_controller_model(self, save=False):
+    def update_controller_model(self, save=False) -> bool:
         """
         Update the controller model
         """
@@ -86,6 +86,8 @@ class BrewPi04xSyncher(AbstractSyncher):
 
         if save:
             self.controller.save()
+
+        return self.controller.alive
 
 
     @multimethod(TemperatureSensor)
