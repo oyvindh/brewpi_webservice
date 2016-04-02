@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils.translation import ugettext as _
 
-from ..models import PWMActuator
+from device.models import PWMActuator
 
 class DS2413Actuator(PWMActuator):
     """
@@ -16,7 +16,7 @@ class DS2413Actuator(PWMActuator):
         (1, 'B')
     )
 
-    pio = models.PositiveIntegerField(choices=PIO_CHOICES, help_text=_("PIO number of the addressable switch"))
+    pio = models.PositiveIntegerField(choices=PIO_CHOICES, default=0, help_text=_("PIO number of the addressable switch"))
     inverted = models.BooleanField(default=False, help_text=_("If the switch is inverted"))
 
     @property
