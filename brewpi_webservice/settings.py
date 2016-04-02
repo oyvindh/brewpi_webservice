@@ -50,11 +50,6 @@ INSTALLED_APPS = [
     'devices.core.actuator'
 ]
 
-# Add plugins in INSTALLED_APPS
-from pkg_resources import iter_entry_points
-for entry_point in iter_entry_points(group='app', name=None):
-    # print(entry_point)
-    pass
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',

@@ -1,11 +1,11 @@
 Feature: testing plugin hooks
   
   Scenario: Add a new controller device
-    Given I have a controller device plugin
-    When I activate it
-    Then the device becomes available
+    Given There's a controller device model plugin available
+    When I activate its model
+    Then the model can be used
 
   Scenario: Add support to administrate a controller device
-    Given I have a controller device plugin
-    When I activate it
-    Then I can use it in the controller administration panel
+    Given There's a controller device admin plugin available
+    When I activate its admin model
+    Then the inline is loaded in the controller administration model
