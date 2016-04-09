@@ -4,8 +4,6 @@ Roadmap
 Environment setup -- **DONE**
 -----------------------------
 
-**DONE**
-
 * Rough draft (framework & libraries exploration)
 * Setup TDD & BDD testing
 * Setup Coverage
@@ -37,7 +35,7 @@ Object Synchronization
 ----------------------
 
 * Two-way data binding
-* Synchronization layer (using ControlBox library)
+* Synchronization layer (using `ControlBox library <https://github.com/m-mcgowan/controlbox-connect-py>`_)
 * Data synchronization plugins
 * Controller mocking for unit testing
 
