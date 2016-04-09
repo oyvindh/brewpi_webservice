@@ -13,6 +13,7 @@ Contents:
 
    development/core_notions
    development/plugins
+   development/roadmap
 
 
 Indices and tables
