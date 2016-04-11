@@ -12,6 +12,7 @@ Contents:
    :maxdepth: 2
 
    development/core_notions
+   development/hardware
    development/plugins
    development/roadmap
 
