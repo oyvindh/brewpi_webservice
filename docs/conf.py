@@ -40,6 +40,7 @@ extensions = [
     'sphinx.ext.coverage',
     'sphinx.ext.viewcode',
     'sphinx.ext.githubpages',
+    'sphinx.ext.intersphinx'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -298,7 +299,7 @@ texinfo_documents = [
 #texinfo_no_detailmenu = False
 
 intersphinx_mapping = {
-    'python': ('http://python.readthedocs.org/en/v3.4.0/', None),
+    'python': ('http://docs.python.org/3/', None),
     'django': ('http://docs.djangoproject.com/en/1.9/', 'https://docs.djangoproject.com/en/1.9/_objects/'),
     'sphinx': ('http://sphinx.readthedocs.org/en/latest/', None),
 }
