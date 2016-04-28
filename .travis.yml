@@ -1,4 +1,7 @@
 language: python
+python:
+  - "3.4"
+  - "3.5"
 install:
 - pip install tox==2.3.1
 - pip install coveralls==1.1
