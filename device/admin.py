@@ -7,6 +7,7 @@ import pkg_resources
 from brewpi_webservice.admin import admin_site
 from .models import Device
 
+
 @admin.register(Device, site=admin_site)
 class DeviceParentAdmin(PolymorphicParentModelAdmin):
     """
@@ -33,11 +34,14 @@ class DeviceAdmin(PolymorphicChildModelAdmin):
 
 class DeviceInline(admin.StackedInline):
     extra = 0
+
     def has_add_permission(self, request):
         return True
 
+
 class ActuatorInline(DeviceInline):
     readonly_fields = ['actuator_ptr']
+
 
 class SensorInline(DeviceInline):
     readonly_fields = ['sensor_ptr']

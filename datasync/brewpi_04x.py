@@ -2,13 +2,14 @@ import json
 import time
 from urllib.parse import urljoin
 
-from multimethod import multimethod, DispatchError
+from multimethod import multimethod
 import requests
 
 from device.sensor.models import TemperatureSensor
 from device.actuator.models import DS2413Actuator
 
 from .abstract import AbstractSyncher
+
 
 class BrewPi04xSyncher(AbstractSyncher):
     """
@@ -27,7 +28,7 @@ class BrewPi04xSyncher(AbstractSyncher):
         self.full_uri = urljoin(aController.uri, self.script_path)
         self.device_data = None
 
-    def _refresh_device_list(self, read_values : bool) -> bool:
+    def _refresh_device_list(self, read_values: bool) -> bool:
         """
         Ask the controller to internally refresh its device list
         """
@@ -78,7 +79,7 @@ class BrewPi04xSyncher(AbstractSyncher):
         """
         Update the controller model
         """
-        if self.device_data == None:
+        if self.device_data is not None:
             self.controller.alive = False
         else:
             self.controller.alive = True
@@ -88,7 +89,6 @@ class BrewPi04xSyncher(AbstractSyncher):
             self.controller.save()
 
         return self.controller.alive
-
 
     @multimethod(TemperatureSensor)
     def _update_model(aModel, data) -> bool:

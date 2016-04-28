@@ -3,7 +3,7 @@ from multimethod import multimethod, DispatchError
 from django.db import models
 
 from device.models import Device
-from device.sensor.models import TemperatureSensor
+
 
 class AbstractSyncher(object):
     """
@@ -11,13 +11,11 @@ class AbstractSyncher(object):
     """
     (PROTO_ONEWIRE) = range(0, 1)
 
-
     def read_sensor_states(self) -> bool:
         """
         Refresh and read state devices from the Controller
         """
         raise NotImplementedError
-
 
     def update_controller_model(self, save=False) -> bool:
         """
@@ -40,7 +38,6 @@ class AbstractSyncher(object):
             return None
 
         return device
-
 
     def _get_or_make_installed_device(self, aDeviceClass, aController, slot_id) -> Device:
         """
@@ -69,7 +66,6 @@ class AbstractSyncher(object):
         Uninstall a given device on the model side
         """
         aDevice.slot_id = None
-
 
     def _make_uri(self, protocol, address) -> str:
         """
