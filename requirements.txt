@@ -17,4 +17,4 @@ sphinx>=1.4.0
 sphinx-rtd-theme
 
 
--e ./plugins/brewpi.service.devices.core
+-e git+https://github.com/glibersat/brewpi.service.devices.core#egg=brewpi.service.devices.core
