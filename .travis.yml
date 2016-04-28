@@ -1,0 +1,9 @@
+language: python
+install: 
+ - pip install tox==2.3.1
+ - pip install coveralls==1.1
+
+script: tox
+
+after_success:
+    coveralls
