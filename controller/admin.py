@@ -1,7 +1,5 @@
 from django.contrib import admin
 
-from polymorphic.admin import PolymorphicParentModelAdmin, PolymorphicChildModelAdmin
-
 from brewpi_webservice.admin import admin_site
 
 import pkg_resources
@@ -18,4 +16,3 @@ class ControllerAdmin(admin.ModelAdmin):
     list_display = ('name', 'uri', 'alive')
     inlines = inline_admin_models
     readonly_fields = ['alive']
-

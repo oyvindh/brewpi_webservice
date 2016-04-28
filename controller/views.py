@@ -1,8 +1,9 @@
 from rest_framework import viewsets
-from rest_framework.views import APIView
+from rest_framework.response import Response
 
 from .models import Controller
-from .serializers import ControllerSerializer, DeviceSerializer
+from .serializers import ControllerSerializer
+
 
 class DeviceViewSet(viewsets.ViewSet):
     def list(self, request, controller_pk=None):
