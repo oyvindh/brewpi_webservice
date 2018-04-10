@@ -65,3 +65,10 @@ target/
 # pyenv
 .python-version
 .idea/
+
+# VS Code
+.vscode/
+
+# Database
+db.sqlite3
+
