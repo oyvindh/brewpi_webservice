@@ -16,17 +16,17 @@ For Windows:
     
 For other systems:
     
-    pip install virtualenvwrapper
+    pip3 install virtualenvwrapper
     
 
 Create a new virtualenv:
 
-    mkvirtualenv brewpiws
+    virtualenv -p python3 brewpiws
     
 
 Now start using the virtualenv:
     
-    workon brewpiws
+    source brewpiws/bin/activate
 
 
 Install all required dependencies:
